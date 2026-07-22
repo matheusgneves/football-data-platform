@@ -18,6 +18,7 @@ Ativar ambiente virtual
 Instalação das bibliotecas necessárias inicialmente
 
 	pip install requests python-dotenv boto3
+	pip install pydantic-settings
 
 Criação de arquivos
 	
