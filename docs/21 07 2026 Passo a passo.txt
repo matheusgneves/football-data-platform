@@ -36,6 +36,6 @@ Configuração do Git
 	git config --global --list
 	git commit -m "chore: create initial project structure"
 	git branch -M main
-	git config --global user.name "Matheus Gonçalves Neves"
-	git config --global user.email "226366529+matheusgneves@users.noreply.github.com"
+ 	git remote add origin https://github.com/matheusgneves/football-data-platform.git
 	git remote set-url origin https://github.com/matheusgneves/football-data-platform.git
+	git pull origin main
