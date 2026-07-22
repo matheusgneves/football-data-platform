@@ -1,0 +1,38 @@
+21/07/2026
+Passo a passo de tudo o que fiz para iniciar o projeto:
+
+Criar repositório do projeto:
+
+	mkdir football-data-platform
+	cd football-data-platform
+	git init
+
+Criar ambiente virtual
+
+	python3 -m venv .venv
+
+Ativar ambiente virtual
+
+	source .venv/bin/activate
+	
+Instalação das bibliotecas necessárias inicialmente
+
+	pip install requests python-dotenv boto3
+
+Criação de arquivos
+	
+	pyproject.toml
+	football_client.py
+	countries.py
+	s3.py
+	.env
+	.gitignore
+	
+Configuração do Git
+
+	git config --global user.name "Matheus Gonçalves Neves"
+	git config --global user.email "226366529+matheusgneves@users.noreply.github.com"
+	git config --global --list
+	git commit -m "chore: create initial project structure"
+	git branch -M main
+	
