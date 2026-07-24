@@ -1,7 +1,6 @@
 import requests
 from app.config.settings import settings
 
-
 class FootballClient:
     """Cliente responsável por toda comunicação com a API-Football."""
 
