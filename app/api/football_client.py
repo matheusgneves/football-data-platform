@@ -29,7 +29,7 @@ class FootballClient:
         return self._get("timezone")
     
     def get_countries(self) -> dict:
-        """Retorna a lista de países disponíveis na API-Football."""
+        """Retorna a lista de países ."""
         return self._get("countries")
     
     def get_leagues(self) -> dict:
@@ -37,7 +37,7 @@ class FootballClient:
         return self._get("leagues")
 
     def get_league_seasons(self) -> dict:
-        """Retorna todas as temporadas disponíveis na API-Football."""
+        """Retorna todas as temporadas ."""
         return self._get("leagues/seasons")
 
     def get_teams_information(
@@ -51,7 +51,7 @@ class FootballClient:
             venue_id: int | None = None,
             search: str | None = None
     ) -> dict:
-        """Retorna todos os times disponíveis na API-Football."""
+        """Retorna todos os times ."""
         params = {
             "id": team_id,
             "name": name,
@@ -83,7 +83,7 @@ class FootballClient:
         return self._get("teams/statistics", params=params)
 
     def get_teams_countries(self) -> dict:
-        """Retorna os países dos times disponíveis na API-Football."""
+        """Retorna os países dos times ."""
         return self._get("teams/countries")
 
     def get_venues(
@@ -94,7 +94,7 @@ class FootballClient:
             country: str | None = None,
             search: str | None = None 
     ) -> dict:
-        """Retorna as sedes disponíveis na API-Football."""
+        """Retorna as sedes ."""
         params = {
             "id": venue_id,
             "name": name,
@@ -121,7 +121,7 @@ class FootballClient:
         return self._get("standings", params=params)
 
     def get_teams_seasons(self, team_id: int) -> dict:
-        """Retorna as temporadas de um time disponíveis na API-Football."""
+        """Retorna as temporadas de um time ."""
         params = {
             "team": team_id,
         }
@@ -131,8 +131,8 @@ class FootballClient:
             self,
             league_id: int,
             season_id: int,
-            current: bool | None = None,
-            dates: bool | None = None ,
+            current: bool = False,
+            dates: bool = False,
             timezone: str | None = None 
     ) -> dict:
         """Retorna as rodadas de uma liga em uma temporada específica."""
@@ -149,21 +149,22 @@ class FootballClient:
     def get_fixtures(
             self,
             fixture_id: int | None = None,
-            fixture_ids: int | None = None,
+            fixture_ids: str | None = None,
             live: str | None = None,
             date: str | None = None,
             league_id: int | None = None,
             season_id: int | None = None,
             team_id: int | None = None,
             last: int | None = None,
-            next: int | None = None,
+            _next: int | None = None,
             _from: str | None = None,
             to: str | None = None,
-            round: str | None = None,
+            _round: str | None = None,
             status: str | None = None,
             venue_id: int | None = None,
             timezone: str | None = None
     ) -> dict:
+        """Retorna as partidas de uma liga e temporada."""
         params = {
             "id": fixture_id,
             "ids": fixture_ids,
@@ -173,10 +174,10 @@ class FootballClient:
             "season": season_id,
             "team": team_id,
             "last": last,
-            "next": next,
+            "next": _next,
             "from": _from,
             "to": to,
-            "round": round,
+            "round": _round,
             "status": status,
             "venue": venue_id,
             "timezone": timezone
@@ -191,20 +192,21 @@ class FootballClient:
             league_id: int | None = None,
             season_id: int | None = None,
             last: int | None = None,
-            next: int | None = None,
+            _next: int | None = None,
             _from: str | None = None,
             to: str | None = None,
             status: str | None = None,
             venue_id: int | None = None,
             timezone: str | None = None
     ) -> dict:
+        """Retorna o confronto direto entre dois times."""
         params = {
             "h2h": h2h_team_ids,
             "date": date,
             "league": league_id,
             "season": season_id,
             "last": last,
-            "next": next,
+            "next": _next,
             "from": _from,
             "to": to,
             "status": status,
@@ -218,13 +220,14 @@ class FootballClient:
             self,
             fixture_id: int,
             team_id: int | None = None,
-            type: str | None = None,
-            half: bool | None = False,
+            _type: str | None = None,
+            half: bool = False,
     ) -> dict:
+        """Retorna as estatísticas de uma partida."""
         params = {
             "fixture": fixture_id,
             "team": team_id,
-            "type": type,
+            "type": _type,
             "half": half
         }
         params = {key: value for key, value in params.items() if value is not None}
@@ -237,6 +240,7 @@ class FootballClient:
             player_id: int | None = None,
             _type: str | None = None
     ) -> dict:
+        """Retorna os eventos de uma partida."""
         params = {
             "fixture": fixture_id,
             "team": team_id,
@@ -253,6 +257,7 @@ class FootballClient:
             player_id: int | None = None,
             _type: str | None = None
     ) -> dict:
+        """Retorna a escalação dos times de uma partida."""
         params = {
             "fixture": fixture_id,
             "team": team_id,
@@ -267,6 +272,7 @@ class FootballClient:
             fixture_id: int,
             team_id: int | None = None
     ) -> dict:
+        """Retorna as estatisticas dos jogadores de uma partida."""
         params = {
             "fixture": fixture_id,
             "team": team_id
@@ -286,6 +292,7 @@ class FootballClient:
             fixture_ids: str | None = None,
             timezone: str | None = None
     ) -> dict:
+        """Retorna o motivo e a lista de jogadores que não estão participando da partida."""
         params = {
             "league": league_id,
             "season": season_id,
@@ -300,6 +307,7 @@ class FootballClient:
         return self._get("injuries", params=params)
 
     def get_predictions(self, fixture_id: int) -> dict:
+        """Retorna as previsões (Time Vencedor, Under/Over, etc.) de uma partida."""
         params = {
             "fixture": fixture_id
         }
@@ -311,6 +319,7 @@ class FootballClient:
             team_id: int | None = None,
             search: str | None = None
     ) -> dict:
+        """Retorna as informações sobre os técnicos e suas carreiras."""
         params = {
             "id": coach_id,
             "team": team_id,
@@ -320,6 +329,7 @@ class FootballClient:
         return self._get("coachs", params=params)
 
     def get_players_seasons(self, player_id: int | None = None) -> dict:
+        """Retorna todas as temporadas disponíveis para as estatísticas de jogador."""
         params = {
             "player": player_id
         }
@@ -330,8 +340,9 @@ class FootballClient:
             self,
             player_id: int | None = None,
             search: str | None = None,
-            page: int | None = 1
+            page: int = 1
     ) -> dict:
+        """Retorna a lista de todos os jogadores."""
         params = {
             "player": player_id,
             "search": search,
@@ -347,8 +358,9 @@ class FootballClient:
             league_id: int | None = None,
             season_id: int | None = None,
             search: str | None = None,
-            page: int | None = 1
+            page: int = 1
     ) -> dict:
+        """Retorna as estatisticas dos jogadores."""
         params = {
             "id": player_id,
             "team": team_id,
@@ -365,6 +377,8 @@ class FootballClient:
             team_id: int | None = None,
             player_id: int | None = None
     ) -> dict:
+        """Retorna a escalação atual do time (caso o parâmetro team seja usado).
+        Retorna os times associados ao jogador (caso o parâmetro player seja usado)."""
         params = {
             "team": team_id,
             "player": player_id
@@ -372,7 +386,8 @@ class FootballClient:
         params = {key: value for key, value in params.items() if value is not None}
         return self._get("players/squads", params=params)
 
-    def get_teams(self, player_id: int) -> dict:
+    def get_player_teams(self, player_id: int) -> dict:
+        """Retorna a lista de times e temporadas em que o jogador jogou durante a carreira."""
         params = {
             "player": player_id
         }
@@ -384,6 +399,7 @@ class FootballClient:
             league_id: int,
             season_id: int
     ) -> dict:
+        """Retorna a lista dos 20 artilheiros de uma liga/copa por temporada."""
         params = {
             "league": league_id,
             "season": season_id
@@ -396,6 +412,7 @@ class FootballClient:
             league_id: int,
             season_id: int
     ) -> dict:
+        """Retorna a lista dos 20 melhores assistentes de uma liga/copa por temporada."""
         params = {
             "league": league_id,
             "season": season_id
@@ -408,6 +425,7 @@ class FootballClient:
             league_id: int,
             season_id: int
     ) -> dict:
+        """Retorna a lista dos 20 jogadores com mais cartões amarelos de uma liga/copa por temporada."""
         params = {
             "league": league_id,
             "season": season_id
@@ -420,6 +438,7 @@ class FootballClient:
             league_id: int,
             season_id: int
     ) -> dict:
+        """Retorna a lista dos 20 jogadores com mais cartões vermelhos de uma liga/copa por temporada."""
         params = {
             "league": league_id,
             "season": season_id
@@ -432,6 +451,7 @@ class FootballClient:
             player_id: int | None = None,
             team_id: int | None = None
     ) -> dict:
+        """Retorna a lista de transferências disponíveis por jogadores ou times."""
         params = {
             "player": player_id,
             "team": team_id
@@ -446,6 +466,7 @@ class FootballClient:
             coach_id: int | None = None,
             coachs_id: str | None = None
     ) -> dict:
+        """Retorna a lista de troféus por jogadores ou técnicos."""
         params = {
             "player": player_id,
             "players": players_id,
@@ -462,6 +483,7 @@ class FootballClient:
             coach_id: int | None = None,
             coachs_id: str | None = None
     ) -> dict:
+        """Retorna a lista de jogadores indisponíveis por jogador ou técnico."""
         params = {
             "player": player_id,
             "players": players_id,
@@ -477,6 +499,7 @@ class FootballClient:
             league_id: int | None = None,
             bet_id: int | None = None
     ) -> dict:
+        """Retorna as odds de jogos ao vivo."""
         params = {
             "fixture": fixture_id,
             "league": league_id,
@@ -490,6 +513,7 @@ class FootballClient:
             bet_id: int | None = None,
             search: str | None = None
     ) -> dict:
+        """Retorna a lista de apostas disponíveis para jogos ao vivo."""
         params = {
             "id": bet_id,
             "search": search
@@ -504,10 +528,11 @@ class FootballClient:
             season_id: int | None = None,
             date: str | None = None,
             timezone: str | None = None,
-            page: int | None = None,
+            page: int = 1,
             bookmaker_id: int | None = None,
             bet_id: int | None = None
     ) -> dict:
+        """Retorna a lista de odds pré-jogo de partidas, ligas/copas ou datas."""
         params = {
             "fixture": fixture_id,
             "league": league_id,
@@ -521,7 +546,8 @@ class FootballClient:
         params = {key: value for key, value in params.items() if value is not None}
         return self._get("odds", params=params)
 
-    def get_odds_mapping(self, page: int | None = None) -> dict:
+    def get_odds_mapping(self, page: int = 1) -> dict:
+        """Retorna os ids de partidas disponíveis para o endpoint odds."""
         params = {
             "page": page
         }
@@ -533,6 +559,7 @@ class FootballClient:
             bookmaker_id: int | None = None,
             search: str | None = None
     ) -> dict:
+        """Retorna a lista de todas as casas de apostas."""
         params = {
             "id": bookmaker_id,
             "search": search
@@ -545,6 +572,7 @@ class FootballClient:
             bet_id: int | None = None,
             search: str | None = None
     ) -> dict:
+        """Retorna todas as apostas disponíveis para odds pré-jogo."""
         params = {
             "id": bet_id,
             "search": search
